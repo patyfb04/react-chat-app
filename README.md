@@ -11,3 +11,4 @@ A lightweight, test-driven chat application built with React, designed to demons
 - 🧪 Unit and integration tests with Vitest and Testing Library
 - ⚙️ CI/CD pipelines via GitHub Actions (optional)
 
+test1
