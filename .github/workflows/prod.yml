@@ -1,0 +1,53 @@
+name: Prod Workflow
+
+on:
+  workflow_dispatch:
+
+jobs:
+  rebase-stage-onto-prod:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout prod branch
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Configure Git
+        run: |
+          git config user.name "Patricia"
+          git config user.email "patyfb04@gmail.com"
+
+      - name: Fetch stage branch
+        run: git fetch origin stage
+
+      - name: Rebase stage onto prod
+        run: |
+          git checkout stage
+          git rebase origin/main
+          git push origin stage --force
+
+  merge-stage-to-main:
+    needs: rebase-stage-onto-prod
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout main branch
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Configure Git
+        run: |
+          git config user.name "Patricia"
+          git config user.email "patyfb04@gmail.com"
+
+      - name: Merge stage into main
+        run: |
+          git fetch origin stage
+          git merge origin/stage --no-ff -m "Merge stage into main"
+          git push origin main
+
+  call-common-deploy:
+    needs: merge-stage-to-main
+    uses: ./.github/workflows/common-deploy.yml
+    with:
+      node-version: "17"

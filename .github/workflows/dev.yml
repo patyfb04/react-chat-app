@@ -1,0 +1,13 @@
+name: Dev Workflow
+
+on:
+  push:
+    branches: [dev]
+  pull_request:
+    branches: [features/*]
+
+jobs:
+  call-common-deploy:
+    uses: ./.github/workflows/common-deploy.yml
+    with:
+      node-version: "17"
