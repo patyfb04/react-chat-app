@@ -50,4 +50,4 @@ jobs:
     needs: merge-stage-to-main
     uses: ./.github/workflows/common.deploy.yml
     with:
-      node-version: "17"
+      node-version: "24.6.0"
