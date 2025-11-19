@@ -48,6 +48,6 @@ jobs:
 
   call-common-deploy:
     needs: merge-dev-to-stage
-    uses: ./.github/workflows/common-deploy.yml
+    uses: ./.github/workflows/common.deploy.yml
     with:
-      node-version: "17"
+      node-version: "24.6.0"
